@@ -1,0 +1,636 @@
+/* Data Twin City Weimar — platform styles.
+   Light, minimal analysis-tool UI. Full-height map blocks, each followed by a
+   descriptive metadata block in normal flow. */
+
+:root {
+  --bg: #F6F3EC;
+  --bg-panel: #F6F3EC;
+  --bg-panel-2: #ECE7DB;
+  --border: #cfc9ba;
+  --border-strong: #0D0D0D;
+  --text: #0D0D0D;
+  --text-dim: #6e6e6e;
+  --accent: #EE5A14;
+  --danger: #c0564d;
+  --shadow: 0 1px 2px rgba(20, 25, 35, 0.06), 0 6px 20px rgba(20, 25, 35, 0.08);
+  --panel-bg-translucent: rgba(255, 255, 255, 0.94);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+#boot-msg { padding: 24px; color: var(--text-dim); }
+
+/* ---------- Map block ---------- */
+
+.map-block {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  border-bottom: 1px solid var(--border-strong);
+  overflow: hidden;
+}
+
+.maplibre-host {
+  position: absolute;
+  inset: 0;
+}
+
+/* Hide MapLibre's own credit UI — we render our own attribution strip. */
+.maplibregl-ctrl-attrib,
+.maplibregl-ctrl-bottom-right,
+.maplibregl-ctrl-bottom-left { display: none !important; }
+
+/* MapLibre popup — light UI. */
+.maplibregl-popup-content {
+  background: var(--bg-panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: var(--shadow);
+  font-size: 12px;
+  padding: 10px 12px;
+}
+.maplibregl-popup-content th { text-align: left; padding-right: 8px; color: var(--text-dim); font-weight: 700; }
+.maplibregl-popup-content a { color: var(--accent); }
+.maplibregl-popup-close-button { color: var(--text-dim); font-size: 16px; }
+.maplibregl-popup-tip { display: none; }
+.maplibregl-ctrl-group {
+  background: var(--bg-panel);
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+}
+.maplibregl-ctrl-group button + button { border-top: 1px solid var(--border); }
+
+.block-title {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  padding: 6px 16px;
+  background: var(--panel-bg-translucent);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Left panel (per block) ---------- */
+
+.sidebar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  bottom: 40px;
+  width: 288px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: var(--shadow);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sidebar-header-text { flex: 1; min-width: 0; }
+
+.sidebar-header h1 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.sidebar-header .subtitle {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.layer-groups {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.panel-empty {
+  margin: 0;
+  padding: 12px 14px;
+  color: var(--text-dim);
+}
+
+/* Group (semantic or by-resource) */
+.group { border-bottom: 1px solid var(--border); }
+.group:last-child { border-bottom: none; }
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.group-header:hover { background: var(--bg-panel-2); }
+
+.group-toggle {
+  color: var(--text-dim);
+  font-size: 10px;
+  width: 12px;
+  flex-shrink: 0;
+  transition: transform 0.12s ease;
+}
+
+.group.collapsed .group-toggle { transform: rotate(-90deg); }
+.group.collapsed .group-body { display: none; }
+
+.group-title {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 12px;
+  text-decoration: none;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a.group-title:hover { color: var(--accent); text-decoration: underline; }
+
+.group-body { padding: 1px 0 5px; }
+
+/* Layer row — name + eye only, no description */
+.layer-row {
+  padding: 6px 12px 6px 30px;
+}
+
+.layer-row:hover { background: var(--bg-panel-2); }
+
+.layer-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.layer-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.layer-row.off .layer-name { color: var(--text-dim); }
+
+.eye-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  padding: 2px;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.eye-btn:hover { opacity: 1; }
+.layer-row.on .eye-btn { opacity: 1; }
+
+/* ---------- Toolbar ---------- */
+
+.sidebar-toolbar {
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Collapse the toolbar entirely while every button in it is hidden
+   (i.e. export mode off) so it leaves no empty bordered strip. */
+.sidebar-toolbar:not(:has(button:not([hidden]))) { display: none; }
+
+.sidebar-toolbar button {
+  width: 100%;
+  padding: 7px 10px;
+  background: var(--bg-panel-2);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sidebar-toolbar button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.sidebar-toolbar button:disabled { color: var(--text-dim); cursor: not-allowed; opacity: 0.55; }
+.sidebar-toolbar button[hidden] { display: none; }
+
+/* ---------- Layer export (TASK 09) ---------- */
+
+.btn-export-toggle {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  background: var(--bg-panel-2);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.btn-export-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.btn-export-toggle.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.export-check-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.export-check-wrap[hidden] { display: none; }
+.export-check { margin: 0; cursor: pointer; }
+.export-check:disabled { cursor: not-allowed; }
+
+.map-export {
+  background: var(--bg);
+  padding: 12px clamp(16px, 5vw, 72px);
+  border-bottom: 1px solid var(--border-strong);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.map-export[hidden] { display: none; }
+
+/* The final "Export" (run) button — primary look, overrides the plain
+   .sidebar-toolbar button base. Appears right under "Select area". */
+.sidebar-toolbar button.btn-export-run {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.sidebar-toolbar button.btn-export-run:hover:not(:disabled) {
+  color: #fff;
+  filter: brightness(1.08);
+}
+
+.sidebar-toolbar button.btn-export-run:disabled {
+  background: var(--bg-panel-2);
+  color: var(--text-dim);
+  border-color: var(--border-strong);
+  opacity: 1;
+}
+
+.export-status { color: var(--text-dim); line-height: 1.4; }
+
+/* ---------- 2D / 3D switch + terrain toggle (per block) ---------- */
+
+.view-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.view-switch {
+  display: flex;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.view-switch button {
+  padding: 7px 15px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.view-switch button:hover { color: var(--text); }
+.view-switch button.active { background: var(--accent); color: #fff; }
+
+.btn-terrain {
+  padding: 7px 14px;
+  background: var(--bg-panel);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+
+.btn-terrain:hover { color: var(--text); }
+.btn-terrain.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ---------- Attribution strip (per block) ---------- */
+
+.attribution {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px 12px;
+  background: var(--panel-bg-translucent);
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 10;
+}
+
+.attribution a { color: var(--text-dim); }
+
+/* ---------- Sources strip (under each map, in normal flow) ---------- */
+
+.map-meta {
+  background: var(--bg);
+  padding: 12px clamp(16px, 5vw, 72px);
+  border-bottom: 1px solid var(--border-strong);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.meta-label {
+  color: var(--text-dim);
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.meta-src {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.meta-src:hover { text-decoration: underline; }
+
+.meta-sep {
+  color: var(--text-dim);
+  margin: 0 8px;
+}
+
+/* ---------- Export format switch (TASK 28) ---------- */
+.export-format { display: flex; flex-direction: column; gap: 4px; }
+.export-format[hidden], .export-origin[hidden] { display: none; }
+.export-format-sel {
+  width: 100%; padding: 6px 8px; font-size: 12px; font-weight: 700;
+  background: var(--bg-panel-2); color: var(--text);
+  border: 1px solid var(--border-strong); border-radius: 0;
+}
+.export-origin { font-size: 11px; color: var(--text-dim); cursor: pointer; }
+
+/* ---------- Building use legend (TASK 39) ---------- */
+.use-legend {
+  position: absolute;
+  right: 12px;
+  bottom: 34px;
+  z-index: 12;
+  padding: 8px 10px;
+  background: var(--panel-bg-translucent);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: var(--shadow);
+  font-size: 11px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+.use-legend[hidden] { display: none; }
+.use-legend-title { font-weight: 700; margin-bottom: 2px; }
+.use-legend-row { display: flex; align-items: center; gap: 6px; }
+.use-legend-swatch { width: 12px; height: 12px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.25); flex: none; }
+
+/* =====================================================================
+   Swiss layout (landing + three-column map section)
+   Helvetica Neue only: regular / bold / italic. Square corners, no shadows.
+   ===================================================================== */
+:root { --shadow: none; --gutter: clamp(16px, 4vw, 56px); }
+button, select, input { font-family: inherit; }
+h1, h2, p { margin: 0; }
+[hidden] { display: none !important; }
+
+/* ---- Landing ---- */
+.landing {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--gutter);
+  min-height: 100vh;
+  padding: var(--gutter);
+  border-bottom: 2px solid var(--text);
+}
+.landing-text { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding-bottom: var(--menu-list-h, 0px); }
+/* Sources sit in the reserved space under the title; the last line ends level
+   with the text of the last menu entry (menu-item padding 18px + 1px border). */
+.landing-sources-block { position: absolute; left: 0; right: 0; bottom: 17px; }
+.landing-sources-block .landing-sub { margin-top: 0; }
+.landing-inst { font-size: 14px; line-height: 1.04; letter-spacing: -0.01em; }
+.landing-inst strong { display: block; font-weight: 400; font-style: normal; }
+.landing-inst span { display: block; font-weight: 400; }
+.landing-title { font-size: clamp(48px, 8.25vw, 126px); line-height: 0.9; letter-spacing: -0.04em; font-weight: 700; }
+.landing-title-top { display: block; font-size: 0.2267em; letter-spacing: -0.02em; margin-bottom: 0.18em; }
+.landing-sources { list-style: none; margin: 10px 0 0; padding: 0; font-size: 13px; line-height: 1.6; font-style: italic; }
+.landing-sources a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.landing-sources a:hover { color: var(--accent); }
+.landing-sub { margin-top: 18px; font-size: 14px; font-style: normal; font-weight: 400; letter-spacing: -0.01em; }
+.landing-menu { display: flex; flex-direction: column; justify-content: flex-end; }
+.menu-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding-bottom: 10px; border-bottom: 2px solid var(--text); }
+.menu-list { display: flex; flex-direction: column; }
+.menu-item {
+  display: grid; grid-template-columns: 44px 1fr auto; align-items: baseline;
+  padding: 18px 0; background: none; border: none; border-bottom: 1px solid var(--text);
+  color: var(--text); text-align: left; cursor: pointer;
+  font-size: clamp(18px, 2vw, 26px); font-weight: 400; letter-spacing: -0.01em;
+}
+.menu-num { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
+.menu-arrow { font-weight: 400; transition: transform 0.15s ease; }
+.menu-item:hover { color: var(--accent); }
+.menu-item:hover .menu-arrow { transform: translateY(3px); }
+.menu-item.active { font-weight: 700; color: var(--accent); }
+
+/* ---- Stage ---- */
+#stage { padding: var(--gutter) var(--gutter) 0; border-bottom: none; background: var(--bg); }
+.map-block { border: 1px solid var(--text); }
+.map-block {
+  display: grid;
+  grid-template-columns: 336px minmax(0, 1fr) 336px;
+  height: calc(100vh - 8px);
+  min-height: 600px;
+  padding: 0;
+  border-bottom: 1px solid var(--text);
+  overflow: hidden;
+  background: var(--bg);
+}
+.map-center { position: relative; min-width: 0; border-left: 1px solid var(--text); border-right: 1px solid var(--text); }
+.map-block .sidebar, .map-block .tools {
+  position: static; width: auto; bottom: auto; z-index: auto;
+  display: flex; flex-direction: column; min-height: 0;
+  background: var(--bg-panel); border: none; border-radius: 0; box-shadow: none;
+}
+.sidebar-header { align-items: baseline; padding: 14px 16px 12px; border-bottom: 1px solid var(--text); }
+.sidebar-header h2 { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.sidebar-header .subtitle { margin-top: 3px; font-size: 11px; font-style: italic; color: var(--text-dim); }
+.group-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+.tools-body { flex: 1; overflow-y: auto; }
+.tools-section { padding: 14px 16px 16px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.tools-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.tools-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.tools-note { font-size: 11px; font-style: italic; color: var(--text-dim); }
+
+/* Buttons: outlined black, active = filled black */
+.tools button, .view-switch button, .btn-terrain {
+  padding: 8px 10px; background: var(--bg-panel); color: var(--text);
+  border: 1px solid var(--text); border-radius: 0; cursor: pointer;
+  font-size: 12px; font-weight: 700; width: 100%;
+}
+.tools button:hover:not(:disabled), .btn-terrain:hover { background: var(--text); color: #fff; }
+.tools button:disabled { color: var(--text-dim); border-color: var(--border); background: var(--bg-panel); cursor: not-allowed; opacity: 1; }
+.tools .btn-export-toggle.active { background: var(--text); color: #fff; }
+.tools .sidebar-toolbar { padding: 0; border: none; gap: 6px; }
+.tools .sidebar-toolbar button.btn-export-run { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tools .sidebar-toolbar button.btn-export-run:disabled { background: var(--bg-panel); color: var(--text-dim); border-color: var(--border); }
+.tools .map-export { padding: 0; border: none; background: none; font-size: 11px; line-height: 1.4; display: block; }
+
+.view-controls { top: 12px; left: 12px; right: auto; align-items: flex-start; }
+.view-switch { border: 1px solid var(--text); }
+.view-switch button { width: auto; border: none; padding: 7px 14px; }
+.view-switch button.active, .btn-terrain.active { background: var(--text); color: #fff; }
+.btn-terrain { width: auto; }
+.attribution { background: rgba(255,255,255,0.94); border-top: 1px solid var(--text); }
+.use-legend { right: 12px; bottom: 34px; }
+
+.map-meta { padding: 12px 0 var(--gutter); border-bottom: none; background: var(--bg); }
+.meta-src { color: var(--text); text-decoration: underline; }
+.meta-src:hover { color: var(--accent); }
+.maplibregl-popup-content { border: 1px solid var(--text); }
+
+/* ---- Responsive ---- */
+@media (max-width: 1000px) {
+  .landing { grid-template-columns: 1fr; min-height: auto; }
+  .landing-text { padding-bottom: 0; }
+  .landing-sources-block { position: static; }
+  .map-block { grid-template-columns: 1fr; grid-template-rows: auto 70vh auto; height: auto; }
+  .map-center { border: none; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); }
+  .map-block .sidebar .layer-groups { max-height: 40vh; }
+}
+
+/* ---- Bauhaus pass ---- */
+body { background: var(--bg); }
+.landing { background: var(--bg); }
+.use-legend { display: flex; gap: 14px; max-height: calc(100% - 80px); overflow: hidden; background: var(--bg); border: 1px solid var(--text); }
+.use-legend-block { min-width: 0; }
+.use-legend-title { text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; margin-bottom: 4px; }
+.use-legend-swatch { border-radius: 0; border: none; }
+
+.view-pick { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--text); }
+.view-pick-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-right: 4px; }
+.view-pick button { padding: 6px 8px; background: var(--bg-panel); color: var(--text); border: 1px solid var(--text); border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 700; }
+.view-pick button:hover { background: var(--text); color: var(--bg); }
+.view-pick button.active { background: var(--text); color: var(--bg); }
+
+.cat-btn { background: none; border: 1px solid var(--text); width: 22px; height: 22px; padding: 0; cursor: pointer; font-size: 11px; line-height: 1; color: var(--text); flex-shrink: 0; }
+.cat-btn:hover, .cat-btn.open { background: var(--text); color: var(--bg); }
+.cat-panel { margin: 6px 0 4px; padding: 8px 10px; border: 1px solid var(--text); background: var(--bg-panel); max-height: 240px; overflow-y: auto; }
+.cat-actions { display: flex; gap: 6px; margin-bottom: 6px; }
+.cat-actions button { flex: 1; padding: 3px 6px; background: none; border: 1px solid var(--text); border-radius: 0; cursor: pointer; font-size: 11px; font-weight: 700; color: var(--text); }
+.cat-actions button:hover { background: var(--text); color: var(--bg); }
+.cat-item { display: flex; align-items: center; gap: 6px; padding: 2px 0; font-size: 12px; cursor: pointer; }
+.cat-item input { margin: 0; accent-color: var(--text); }
+.cat-item .use-legend-swatch { width: 12px; height: 12px; }
+
+.tools .btn-grid.active { background: var(--text); color: var(--bg); }
+.tools button:hover:not(:disabled), .btn-terrain:hover { color: var(--bg); }
+.tools .btn-export-toggle.active, .view-switch button.active, .btn-terrain.active { color: var(--bg); }
+.layer-row.on .layer-name { font-weight: 700; }
+
+#stage { padding-top: 24px; }
+.map-block { height: calc(100vh - 48px); }
+.cat-btn { font-size: 15px; font-weight: 700; }
+
+/* ---- white site, annotations, export zone ---- */
+:root { --bg: #FFFFFF; --bg-panel: #FFFFFF; --bg-panel-2: #F2F2F2; --border: #D6D6D6; }
+body, .landing, #stage, .map-meta, .map-block, .map-block .sidebar, .map-block .tools { background: #FFFFFF; }
+.use-legend { left: 12px; right: auto; bottom: 34px; background: #FFFFFF; }
+.btn-annot {
+  position: absolute; right: 12px; bottom: 34px; z-index: 12; padding: 8px 12px;
+  background: #FFFFFF; color: var(--text); border: 1px solid var(--text); border-radius: 0;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+}
+.btn-annot:hover, .btn-annot.active { background: var(--text); color: #FFFFFF; }
+.tools .map-export.warn, .map-export.warn { color: #C4161C; }
+.tools .btn-zone.active { background: var(--text); color: #FFFFFF; }
+
+/* ---- legend (conditional signs) + screen grid ---- */
+.use-legend { pointer-events: auto; overflow: auto; max-width: calc(100% - 24px); }
+.use-legend-line { width: 12px; height: 3px; flex: none; }
+.grid-canvas { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 5; }
+.grid-canvas[hidden] { display: none; }
+.grid-label {
+  position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%); z-index: 12;
+  padding: 4px 10px; background: #FFFFFF; border: 1px solid var(--text); font-size: 12px; font-weight: 700;
+  pointer-events: none;
+}
+
+.use-legend-swatch.dot { border-radius: 50%; box-shadow: inset 0 0 0 1px #0D0D0D; }
+
+/* ---- legend: single vertical column on the right ---- */
+.use-legend {
+  left: auto; right: 12px; top: 118px; bottom: auto; width: 236px;
+  flex-direction: column; gap: 10px; max-height: calc(100% - 118px - 84px); overflow-y: auto;
+}
+.use-legend-block { width: 100%; }
+.sub-panel { margin: 4px 0 4px 0; padding: 4px 8px; border: 1px solid var(--text); background: #FFFFFF; }
+.sub-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
+.sub-name { flex: 1; font-size: 12px; }
+.sub-row.off .sub-name { color: var(--text-dim); }
+.layer-row.partial .eye-btn { opacity: 0.55; }
+
+/* second map window stacked under the main one in the same section (e.g. Space Syntax under Simplified Model) */
+.stage-sub { margin-top: 40px; }
+.btn-material { display: block; padding: 8px 10px; border: 1px solid var(--text); font-size: 12px; text-align: center; color: var(--text); text-decoration: none; }
+a.btn-material:hover { background: var(--text); color: #fff; }
+.btn-material.is-soon { border-style: dashed; border-color: var(--border); color: var(--text-dim); cursor: default; }

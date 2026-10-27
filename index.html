@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>City Data Explorer — Weimar</title>
+
+  <!-- MapLibre GL JS via CDN — the single map engine for all map sections.
+       No bundler, no npm. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+  <!-- JSZip via CDN — client-side zip packing for the layer export (TASK 09). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <!-- proj4js via CDN - 3DM export (TASK 28): WGS84 -> EPSG:25832. rhino3dm.js (WASM) is imported lazily by app.js on first 3DM export. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
+
+  <!-- jsPDF via CDN — PDF export of the map image. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- deck.gl via CDN — dead 3D-tiles overlay path (no viewport carries a 3dtiles layer since TASK_15). -->
+  <script src="https://cdn.jsdelivr.net/npm/deck.gl@9.1.12/dist.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="landing">
+    <div class="landing-text">
+      <h1 class="landing-inst">
+        <strong>Bauhaus University Weimar</strong>      </h1>
+      <div>
+        <p class="landing-title"><span class="landing-title-top">City Data Explorer</span>Weimar</p>
+      </div>
+      <!-- Sources: bottom of the list aligned with the last menu entry. -->
+      <div class="landing-sources-block">
+        <p class="landing-sub">This page combines data from different open-data sources:</p>
+        <ul class="landing-sources" id="landing-sources"></ul>
+      </div>
+    </div>
+    <nav class="landing-menu" aria-label="Maps">
+      <div class="menu-label">Select a map</div>
+      <div class="menu-list" id="menu"></div>
+    </nav>
+  </header>
+
+  <!-- One map section per menu entry; built lazily by app.js on first open. -->
+  <main id="stage" hidden></main>
+  <div id="blocks" hidden><p id="boot-msg">Loading…</p></div>
+
+  <script>
+    // Align the bottom of the landing text with the rule under "Select a map":
+    // reserve space equal to the height of the menu list.
+    (function () {
+      var list = document.getElementById("menu");
+      var text = document.querySelector(".landing-text");
+      if (!list || !text) return;
+      function sync() { text.style.setProperty("--menu-list-h", list.offsetHeight + "px"); }
+      sync();
+      if (window.ResizeObserver) new ResizeObserver(sync).observe(list);
+      window.addEventListener("resize", sync);
+    })();
+  </script>
+  <script src="detailed.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "Weimar DGM1 (2014-2019) terrain",
+  "description": "Terrarium-encoded raster-dem tiles from the Thuringia DGM1 (1 m airborne-laserscanning DTM), EPSG:25832 -> 3857. TASK 10 prototype: Blue-green Infrastructure viewport only.",
+  "encoding": "terrarium",
+  "tileSize": 256,
+  "minzoom": 10,
+  "maxzoom": 16,
+  "bounds": [
+    11.2365,
+    50.91673,
+    11.40122,
+    51.03776
+  ],
+  "tiles_per_zoom": {
+    "10": 4,
+    "11": 4,
+    "12": 9,
+    "13": 20,
+    "14": 70,
+    "15": 265,
+    "16": 956
+  },
+  "tiles_total": 1328,
+  "attribution": "\u00a9 GDI-Th (TLVermGeo), Datenlizenz Deutschland \u2013 Namensnennung 2.0",
+  "canonical_dem": "data/processed/dgm_weimar/weimar_dgm_25832.tif",
+  "source_note": "145 of 178 AOI tiles present on disk; the eastern strip (E-km 666 rows 5652-5656, 667-668 all) was not downloaded \u2014 raster-dem tiles are simply absent there."
+}

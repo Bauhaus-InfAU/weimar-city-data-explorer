@@ -1,0 +1,3206 @@
+{
+  "resources": [
+    {
+      "id": "geoproxy_th",
+      "name": "Geoportal Thüringen (Geoproxy)",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services"
+    },
+    {
+      "id": "wega3d",
+      "name": "WEGA 3D — Geoportal Thüringen",
+      "url": "https://geoportal5.geoportal-th.de/wega-3d/"
+    },
+    {
+      "id": "stadt_weimar",
+      "name": "Stadt Weimar — kommunale Geodaten",
+      "url": "https://stadtplan.weimar.de"
+    },
+    {
+      "id": "umweltportal_th",
+      "name": "Umweltportal Thüringen / TLUBN",
+      "url": "https://www.umweltportal.thueringen.de/offene-daten"
+    },
+    {
+      "id": "mobilitaet_th",
+      "name": "Mobilität & Verkehr Thüringen",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services"
+    },
+    {
+      "id": "atkis_verkehr_th",
+      "name": "ATKIS Verkehr — native object catalogue (by object type)",
+      "url": "https://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten/Download-ATKIS"
+    },
+    {
+      "id": "openstreetmap",
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org"
+    },
+    {
+      "id": "teacher_ss",
+      "name": "Counting gates (InfAR, Bauhaus-Universität Weimar)",
+      "url": "https://www.uni-weimar.de/"
+    }
+  ],
+  "terrain": {
+    "url": "{proxy}/wega-3d-data/dtm/layer.json",
+    "requestVertexNormals": true,
+    "viewports": [],
+    "enabled": false,
+    "note": "WEGA 3D quantized-mesh terrain (Thuringia DGM2). DEAD since TASK_15: it was only ever consumed by the CesiumJS Weimar Model block, which is gone — all four viewports are MapLibre and use the raster-dem `terrainDem` build instead. Kept as a record of the WEGA endpoint; wire it back only if a Cesium/quantized-mesh path returns."
+  },
+  "terrainDem": {
+    "url": "terrain/weimar-dgm/{z}/{x}/{y}.png",
+    "encoding": "terrarium",
+    "tileSize": 256,
+    "minzoom": 10,
+    "maxzoom": 16,
+    "exaggeration": 1,
+    "bounds": [
+      11.2365,
+      50.91673,
+      11.40122,
+      51.03776
+    ],
+    "viewports": [
+      "combined",
+      "computational",
+      "blue_green",
+      "space_syntax"
+    ],
+    "attribution": "© GDI-Th (TLVermGeo), Datenlizenz Deutschland – Namensnennung 2.0",
+    "note": "Real elevation as a MapLibre raster-dem source — Terrarium-encoded PNG tiles built from the Thuringia DGM1 (1 m airborne-laserscanning DTM, vintage 2014-2019) by tools/build_dgm_terrain.py. Static tiles under web/terrain/weimar-dgm/. Canonical DEM for Grasshopper: data/processed/dgm_weimar/weimar_dgm_25832.tif. TASK 10 — Blue-green Infrastructure; re-added to Weimar Model in TASK 15 (that viewport is MapLibre again, so it uses this raster-dem terrain like Blue-green, not the WEGA quantized-mesh one). Covers 145 of 178 AOI tiles (eastern strip not yet downloaded)."
+  },
+  "useCategories": [
+    {
+      "name": "Residential",
+      "color": "#FFD500"
+    },
+    {
+      "name": "Mixed",
+      "color": "#F7A81B"
+    },
+    {
+      "name": "Commercial",
+      "color": "#EE5A14"
+    },
+    {
+      "name": "Industry",
+      "color": "#0D0D0D"
+    },
+    {
+      "name": "Education",
+      "color": "#0F5FB5"
+    },
+    {
+      "name": "Culture",
+      "color": "#F7B6D2"
+    },
+    {
+      "name": "Public Service",
+      "color": "#3E8FD6"
+    },
+    {
+      "name": "Sports",
+      "color": "#7BC29A"
+    },
+    {
+      "name": "Religion",
+      "color": "#A8300C"
+    },
+    {
+      "name": "Health",
+      "color": "#E5487F"
+    },
+    {
+      "name": "Parking",
+      "color": "#9A9A94"
+    },
+    {
+      "name": "Petrol Station",
+      "color": "#C9A400"
+    },
+    {
+      "name": "Fire Station",
+      "color": "#D62B0F"
+    },
+    {
+      "name": "Railway Station",
+      "color": "#0A3D7A"
+    },
+    {
+      "name": "Police Station",
+      "color": "#2B7F5B"
+    },
+    {
+      "name": "Agriculture",
+      "color": "#B9DDC6"
+    },
+    {
+      "name": "Infrastructure",
+      "color": "#6B6B66"
+    },
+    {
+      "name": "Other",
+      "color": "#D9D5CA"
+    }
+  ],
+  "sidebar": {
+    "_doc": "Per-viewport semantic grouping of the left panel. A group has a name and an ordered list of items; each item is one sidebar row (one eye toggle) that drives one OR MORE layer ids together. When a viewport has an entry here, the panel and the metadata block under the map are both built from it; viewports with no entry fall back to grouping by source resource. Layer descriptions/sources are NOT shown in the sidebar — they live only in the metadata block.",
+    "computational": [
+      {
+        "name": "Administrative boundary",
+        "items": [
+          {
+            "name": "Administrative boundary",
+            "layers": [
+              "weimar_admin_boundary"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Parcels",
+        "items": [
+          {
+            "name": "Parcels",
+            "layers": [
+              "weimar_parcels"
+            ]
+          },
+          {
+            "name": "Parcels use",
+            "layers": [
+              "weimar_parcels_use"
+            ],
+            "categories": "parcelUseCategories",
+            "filterProperty": "useCategory"
+          }
+        ]
+      },
+      {
+        "name": "Buildings",
+        "items": [
+          {
+            "name": "Building footprints",
+            "layers": [
+              "weimar_building_footprints"
+            ]
+          },
+          {
+            "name": "Buildings 3D - Heights without roofs",
+            "layers": [
+              "weimar_buildings_eave_height"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Building use",
+        "items": [
+          {
+            "name": "Building use footprints",
+            "layers": [
+              "weimar_building_use_footprints"
+            ],
+            "categories": "useCategories",
+            "filterProperty": "useCategory"
+          },
+          {
+            "name": "Building use 3D",
+            "layers": [
+              "weimar_buildings_use_3d"
+            ],
+            "categories": "useCategories",
+            "filterProperty": "useCategory"
+          }
+        ]
+      },
+      {
+        "name": "Space Syntax",
+        "items": [
+          {
+            "name": "Car network (Space Syntax)",
+            "layers": [
+              "weimar_ss_car"
+            ]
+          },
+          {
+            "name": "Pedestrian network (Space Syntax)",
+            "layers": [
+              "weimar_ss_pedestrian"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Space Syntax city-wide",
+        "items": [
+          {
+            "name": "Car network city-wide (Space Syntax)",
+            "layers": [
+              "weimar_ss_car_city"
+            ]
+          },
+          {
+            "name": "Pedestrian network city-wide (Space Syntax)",
+            "layers": [
+              "weimar_ss_pedestrian_city"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SS city wide 2",
+        "items": [
+          {
+            "name": "Car network",
+            "layers": [
+              "weimar_ss_car_city2"
+            ]
+          },
+          {
+            "name": "Pedestrian network",
+            "layers": [
+              "weimar_ss_pedestrian_city2"
+            ]
+          }
+        ]
+      }
+    ],
+    "weimar_model": [
+      {
+        "name": "Administrative boundary",
+        "items": [
+          {
+            "name": "Administrative boundary",
+            "layers": [
+              "weimar_admin_boundary"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Parcels",
+        "items": [
+          {
+            "name": "Parcels",
+            "layers": [
+              "weimar_parcels_outline"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Buildings",
+        "items": [
+          {
+            "name": "Detailed Buildings",
+            "layers": [
+              "weimar_detailed_buildings"
+            ]
+          }
+        ]
+      }
+    ],
+    "combined": [
+      {
+        "name": "Administrative boundary",
+        "items": [
+          {
+            "name": "Administrative boundary",
+            "layers": [
+              "weimar_admin_boundary"
+            ]
+          },
+          {
+            "name": "Ortsteile & Stadtteile",
+            "layers": [
+              "weimar_ortsteile"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Buildings",
+        "items": [
+          {
+            "name": "Buildings footprints",
+            "layers": [
+              "weimar_buildings_footprint_height"
+            ]
+          },
+          {
+            "name": "Building footprints",
+            "layers": [
+              "weimar_building_footprints"
+            ]
+          },
+          {
+            "name": "Buildings 3D",
+            "layers": [
+              "weimar_buildings_extrude"
+            ]
+          },
+          {
+            "name": "Buildings 3D - Heights without roofs",
+            "layers": [
+              "weimar_buildings_eave_height"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Building use",
+        "items": [
+          {
+            "name": "Building use footprints",
+            "layers": [
+              "weimar_building_use_footprints"
+            ],
+            "categories": "useCategories",
+            "filterProperty": "useCategory"
+          },
+          {
+            "name": "Building use 3D",
+            "layers": [
+              "weimar_buildings_use_3d"
+            ],
+            "categories": "useCategories",
+            "filterProperty": "useCategory"
+          }
+        ]
+      },
+      {
+        "name": "Parcels",
+        "items": [
+          {
+            "name": "Parcels",
+            "layers": [
+              "weimar_parcels"
+            ]
+          },
+          {
+            "name": "Parcels use",
+            "layers": [
+              "weimar_parcels_use"
+            ],
+            "categories": "parcelUseCategories",
+            "filterProperty": "useCategory"
+          }
+        ]
+      },
+      {
+        "name": "Road network",
+        "items": [
+          {
+            "name": "Road network across city",
+            "layers": [
+              "weimar_roads"
+            ]
+          },
+          {
+            "name": "Car roads",
+            "layers": [
+              "atkis_verkehr_strassenachse"
+            ]
+          },
+          {
+            "name": "Pedestrian roads",
+            "layers": [
+              "atkis_verkehr_wegpfadsteig",
+              "atkis_verkehr_fahrwegachse"
+            ]
+          },
+          {
+            "name": "Plaza",
+            "layers": [
+              "atkis_verkehr_platz"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Public transport & rail",
+        "items": [
+          {
+            "name": "Bus & tram stops",
+            "layers": [
+              "weimar_transit_stops"
+            ]
+          },
+          {
+            "name": "Railway lines",
+            "layers": [
+              "atkis_bahnstrecke"
+            ]
+          },
+          {
+            "name": "Railway stations",
+            "layers": [
+              "osm_rail_stations"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Parking",
+        "items": [
+          {
+            "name": "Car parking — points",
+            "layers": [
+              "osm_parking_points"
+            ]
+          },
+          {
+            "name": "Car parking — areas",
+            "layers": [
+              "osm_parking_areas"
+            ]
+          },
+          {
+            "name": "Car parking — buildings",
+            "layers": [
+              "osm_parking_buildings"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Fuel & charging",
+        "items": [
+          {
+            "name": "EV charging stations",
+            "layers": [
+              "osm_charging"
+            ]
+          },
+          {
+            "name": "Fuel stations",
+            "layers": [
+              "osm_fuel"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "UNESCO World Heritage",
+        "items": [
+          {
+            "name": "Component objects",
+            "layers": [
+              "osm_unesco_objects"
+            ]
+          },
+          {
+            "name": "Property areas",
+            "layers": [
+              "osm_unesco_property"
+            ]
+          }
+        ]
+      }
+    ],
+    "blue_green": [
+      {
+        "name": "Administrative boundary",
+        "items": [
+          {
+            "name": "Administrative boundary",
+            "layers": [
+              "weimar_admin_boundary"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Landscape & land cover",
+        "items": [
+          {
+            "name": "Land cover (forest, parks, meadows, cemeteries, allotments, sport)",
+            "layers": [
+              "osm_landcover"
+            ],
+            "categories": "landcoverCategories",
+            "filterProperty": "landcover"
+          },
+          {
+            "name": "Farmland (ATKIS)",
+            "layers": [
+              "th_veg_agri"
+            ]
+          },
+          {
+            "name": "Forest (ATKIS)",
+            "layers": [
+              "th_veg_forest"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Water",
+        "items": [
+          {
+            "name": "Water bodies",
+            "layers": [
+              "osm_water_areas"
+            ]
+          },
+          {
+            "name": "Rivers & streams",
+            "layers": [
+              "osm_waterways"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Protected nature",
+        "items": [
+          {
+            "name": "Nature reserves (NSG)",
+            "layers": [
+              "th_nsg_p"
+            ]
+          },
+          {
+            "name": "Landscape protection (LSG)",
+            "layers": [
+              "th_lsg_p"
+            ]
+          },
+          {
+            "name": "FFH areas",
+            "layers": [
+              "th_ffh"
+            ]
+          },
+          {
+            "name": "Bird sanctuaries (SPA)",
+            "layers": [
+              "th_spa_p"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "UNESCO World Heritage",
+        "items": [
+          {
+            "name": "Component objects",
+            "layers": [
+              "osm_unesco_objects"
+            ]
+          },
+          {
+            "name": "Property areas",
+            "layers": [
+              "osm_unesco_property"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Flood",
+        "items": [
+          {
+            "name": "Flood zones (ÜSG)",
+            "layers": [
+              "th_uesg"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Trees & biotopes",
+        "items": [
+          {
+            "name": "Trees",
+            "layers": [
+              "osm_trees"
+            ]
+          },
+          {
+            "name": "Biotopes (OBK)",
+            "layers": [
+              "th_obk_c_inland_waters",
+              "th_obk_c_moors",
+              "th_obk_c_farmland_grassland",
+              "th_obk_c_extreme_sites",
+              "th_obk_c_trees_hedges",
+              "th_obk_c_forests",
+              "th_obk_c_disturbed_sites",
+              "th_obk_c_settlement_recreation"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Water protection",
+        "items": [
+          {
+            "name": "Water & spring protection zones",
+            "layers": [
+              "th_wsg_hqsg"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Hydrogeology",
+        "items": [
+          {
+            "name": "Upper aquifer",
+            "layers": [
+              "th_huek_aquifer"
+            ]
+          },
+          {
+            "name": "Cenozoic aquifer",
+            "layers": [
+              "th_huek_kgwl"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Terrain",
+        "items": [
+          {
+            "name": "Terrain relief (hillshade)",
+            "layers": [
+              "dgm2_hillshade"
+            ]
+          }
+        ]
+      }
+    ],
+    "space_syntax": [
+      {
+        "name": "Counting gates",
+        "items": [
+          {
+            "name": "Counting gates",
+            "layers": [
+              "weimar_counting_gates"
+            ]
+          },
+          {
+            "name": "Counting gates — labels",
+            "layers": [
+              "weimar_counting_gates_labels"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SS city wide 2",
+        "items": [
+          {
+            "name": "Car network",
+            "layers": [
+              "weimar_ss_car_city2"
+            ]
+          },
+          {
+            "name": "Pedestrian network",
+            "layers": [
+              "weimar_ss_pedestrian_city2"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Buildings",
+        "items": [
+          {
+            "name": "Building footprints",
+            "layers": [
+              "weimar_building_footprints"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "layers": [
+    {
+      "id": "weimar_admin_boundary",
+      "name": "Weimar — Administrative boundary",
+      "description": "Official city limits of Weimar (kreisfreie Stadt, Gemeinde_ID 55000) from the Thuringia administrative-boundaries WFS (GRENZUEB_wfs, layer th_etrs89utm32_gmd). Single polygon, ~1360 vertices, converted once to a static GeoJSON by tools/fetch_weimar_boundary.py — no runtime WFS dependency. Faint fill + outline.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_boundary.geojson",
+      "visible": true,
+      "interactive": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#EE5A14",
+        "fill": "rgba(0,0,0,0)",
+        "strokeWidth": 3.5,
+        "outline": true,
+        "clampToGround": false
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#15-administrative-boundary-of-weimar",
+      "viewports": [
+        "computational",
+        "weimar_model",
+        "transport",
+        "blue_green",
+        "combined"
+      ],
+      "onTop": true
+    },
+    {
+      "id": "weimar_ortsteile",
+      "name": "Weimar — Ortsteile & Stadtteile",
+      "description": "Cadastral-legal subdivision of the city: 14 Ortsteile (the incorporated villages — Tröbsdorf, Gelmeroda, Taubach, Legefeld/Holzdorf, …) plus 5 inner-city Stadtteile (Innenstadt, Nordstadt, Südstadt, …). 19 polygons total. Each carries the district name (ortsteil), its class (art = Ortsteil | Stadtteil), a link to the city page and to the bylaw (Ortsrecht). Converted once from the Stadt Weimar open-data Shapefile ko_wei_ort via tools/fetch_weimar_shp.py — static GeoJSON, no runtime service. Reference border only: thin outline, no fill.",
+      "resourceId": "stadt_weimar",
+      "type": "geojson",
+      "url": "layers/data/weimar_ortsteile.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "rgba(0,0,0,0)",
+        "strokeWidth": 1,
+        "outline": true,
+        "clampToGround": false
+      },
+      "attribution": "© GDI-Th / Stadt Weimar, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-08--reorganize-sections",
+      "viewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_parcels",
+      "name": "Parcels",
+      "description": "41 839 cadastral parcels (Flurstücke) for the Weimar AOI — real vector geometry with attributes, not a WMS picture. Parsed once from the 45 Gemarkung GML files of the INSPIRE-ATOMFeed \"TH Flurstücke/Grundstücke ALKIS\" by tools/fetch_weimar_parcels.py. Attributes: nationalCadastralReference, areaValue_m2, label (parcel number). Plain outline fill — this is a Grasshopper-export-ready parcel layer, not extruded (that's only for buildings).",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_parcels.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#F6F3EC",
+        "fillOpacity": 0.6,
+        "strokeWidth": 0.6,
+        "clampToGround": false
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": [
+        "computational",
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_parcels_use",
+      "name": "Parcels use",
+      "description": "Cadastral parcels coloured by ALKIS actual land use (grouped into 14 categories, tools/build_parcels_use.py) and clipped to the Weimar administrative boundary. Attributes as Parcels plus useCategory.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_parcels_use.geojson",
+      "visible": true,
+      "opacity": 1,
+      "style": {
+        "stroke": "#F6F3EC",
+        "fill": "#E9E4D8",
+        "fillOpacity": 0.95,
+        "strokeWidth": 0.5,
+        "clampToGround": false
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": [
+        "computational",
+        "combined"
+      ],
+      "rhinoLayer": "Parcels by use",
+      "colorBy": {
+        "property": "useCategory",
+        "palette": "parcelUseCategories",
+        "legendTitle": "Parcel use"
+      },
+      "visibleViewports": [
+        "computational",
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_parcels_outline",
+      "name": "Parcels",
+      "description": "Parcels as white outlines on a transparent fill (Street Section Analysis); same clipped file as Parcels use.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_parcels_use.geojson",
+      "visible": true,
+      "opacity": 1,
+      "style": {
+        "stroke": "#FFFFFF",
+        "fill": "#FFD500",
+        "fillOpacity": 1,
+        "strokeWidth": 1,
+        "clampToGround": false
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": [
+        "weimar_model"
+      ]
+    },
+    {
+      "id": "alkis_gebaeude",
+      "name": "ALKIS — Buildings",
+      "description": "Cadastral building footprints (Gebäude) for all of Thuringia. Polygon outlines with usage-based fill colour. Raster (WMS), no attributes. Only renders at scales larger than ~1:10 000 — zoom in.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/ALKISKOMPAKT",
+      "wmsLayers": "alkis_geb",
+      "visible": false,
+      "opacity": 1,
+      "minCameraHeight": 2500,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": []
+    },
+    {
+      "id": "alkis_flurstuecke",
+      "name": "ALKIS — Parcels",
+      "description": "Cadastral parcel boundaries (Flurstücke). Polygon outlines only. Raster (WMS), no attributes. Only renders at scales larger than ~1:10 000 — zoom in.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/ALKISKOMPAKT",
+      "wmsLayers": "alkis_fl",
+      "visible": false,
+      "opacity": 1,
+      "minCameraHeight": 2500,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": []
+    },
+    {
+      "id": "alkis_bauwerke",
+      "name": "ALKIS — Structures & facilities",
+      "description": "Selected structures and facilities (Bauwerke und Einrichtungen): retaining walls, courtyards, small technical structures, etc. Sparse. Raster (WMS), no attributes. Only renders at scales larger than ~1:10 000.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/ALKISKOMPAKT",
+      "wmsLayers": "alkis_bwk",
+      "visible": false,
+      "opacity": 1,
+      "minCameraHeight": 2500,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": []
+    },
+    {
+      "id": "alkis_flurstuecksnummern",
+      "name": "ALKIS — Parcel numbers",
+      "description": "Parcel number labels (Flurstücksnummern) as text. Raster (WMS). Only renders at very large scales (larger than ~1:2 500).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/ALKISKOMPAKT",
+      "wmsLayers": "alkis_fsnr",
+      "visible": false,
+      "opacity": 1,
+      "minCameraHeight": 700,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#11-alkis",
+      "viewports": []
+    },
+    {
+      "id": "weimar_buildings_footprint_height",
+      "name": "Buildings (footprint, flat)",
+      "description": "63 450 building footprints for the Weimar AOI, each with a height attribute (m). Parsed once from the Thuringia LoD2 CityGML by tools/parse_citygml_footprints.py. Flat 2D render — see \"Buildings (3D)\" for the same source extruded by height. Large file (~23 MB), off by default.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_buildings_footprint_height.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#F6F3EC",
+        "strokeWidth": 0.8,
+        "clampToGround": false,
+        "fillOpacity": 0.85
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_building_footprints",
+      "name": "Building footprints",
+      "description": "63 450 flat building outlines (no height/volume) for Grasshopper: usage, height, floors, buildingId plus area (m²) and areaSource. Built from weimar_buildings_footprint_height.geojson by tools/build_building_footprints.py; area is computed in EPSG:25832 (ALKIS WFS has no official building area). Off by default.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_building_footprints.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#EE5A14",
+        "fill": "#EE5A14",
+        "strokeWidth": 0.8,
+        "clampToGround": false,
+        "fillOpacity": 0.2
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "combined",
+        "computational",
+        "space_syntax"
+      ]
+    },
+    {
+      "id": "weimar_buildings_extrude",
+      "name": "Buildings (3D)",
+      "description": "Same 63 450 building footprints as \"Buildings (footprint, flat)\" — shares the identical GeoJSON source (fetched once, not duplicated) — rendered as fill-extrusion volumes using the parsed measuredHeight/Z-range attribute (fill-extrusion-height = height, base 0). Neutral semi-transparent wall colour, no roof shape or texture — just a readable massing volume. Toggle this on instead of (or alongside) the flat render for a 3D read of the city fabric.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "renderAs": "extrude",
+      "url": "layers/data/weimar_buildings_footprint_height.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "fill": "#E9E4D8",
+        "opacity": 0.92
+      },
+      "extrusion": {
+        "heightProperty": "height",
+        "base": 0,
+        "fallbackHeight": 3
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_buildings_eave_height",
+      "rhinoLayer": "Buildings 3D - Heights without roofs",
+      "name": "Buildings 3D - Heights without roofs",
+      "description": "Building boxes extruded to the eave (wall top), without the roof volume. Per Building/BuildingPart from the CityGML LoD2 roof surfaces (tools/build_buildings_eave_height.py): area-weighted mean of the lowest edge of each pitched roof surface / the height of each flat one, relative to the lowest ground vertex. Flat roofs keep their full height. Attributes: eaveHeight (= height), ridgeHeight, roofType, heightWithAttic / atticFloorLikely (ALKIS floors that do not fit under the eave), usage, floors. Off by default.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "renderAs": "extrude",
+      "url": "layers/data/weimar_buildings_eave_height.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "fill": "#E9E4D8",
+        "opacity": 0.92
+      },
+      "extrusion": {
+        "heightProperty": "eaveHeight",
+        "base": 0,
+        "fallbackHeight": 3
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "computational",
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_building_use_footprints",
+      "rhinoLayer": "Footprints by use",
+      "name": "Building use footprints",
+      "description": "Flat building outlines coloured by useCategory (18 categories, mapping in tools/building_use_categories.json, baked into the GeoJSON by tools/bake_building_use.py). Same source file as Building footprints. 3DM export: parent Rhino layer 'Footprints by use' with one child layer per category. Off by default.",
+      "url": "layers/data/weimar_building_footprints.geojson",
+      "colorBy": {
+        "property": "useCategory",
+        "palette": "useCategories",
+        "legendTitle": "Building use"
+      },
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#D9D5CA",
+        "fillOpacity": 1,
+        "strokeWidth": 0.5,
+        "clampToGround": false
+      },
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "computational",
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_buildings_use_3d",
+      "rhinoLayer": "3D buildings by use",
+      "name": "Building use 3D",
+      "description": "3D building volumes (height extrusion) coloured by useCategory; same source file as Buildings (3D). 3DM export: parent Rhino layer '3D buildings by use' with one child layer per category. Off by default.",
+      "renderAs": "extrude",
+      "url": "layers/data/weimar_buildings_footprint_height.geojson",
+      "colorBy": {
+        "property": "useCategory",
+        "palette": "useCategories",
+        "legendTitle": "Building use"
+      },
+      "style": {
+        "fill": "#D9D5CA",
+        "opacity": 0.95
+      },
+      "extrusion": {
+        "heightProperty": "height",
+        "base": 0,
+        "fallbackHeight": 3
+      },
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "computational",
+        "combined"
+      ]
+    },
+    {
+      "id": "weimar_ss_car",
+      "rhinoLayer": "SS Car",
+      "name": "Car network (Space Syntax)",
+      "description": "Space Syntax car network, drawn by hand in QGIS (TASK_35) — her drawing is the source of truth, nothing simplified/straightened/thinned. Topology-noded (ends snapped, real crossings split into graph nodes), joined to pedestrian at identical shared vertices, clipped to Base border (city centre only). Presets from TASK_31-34 stay on disk, unused. Off by default.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_car_final.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0F5FB5",
+        "strokeWidth": 1.6
+      },
+      "popupFields": [
+        "ssId",
+        "network",
+        "length",
+        "srcClass"
+      ],
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0 (derived network)",
+      "sourceDoc": "DATA_LOG.md#task-34",
+      "viewports": [
+        "computational"
+      ]
+    },
+    {
+      "id": "weimar_ss_pedestrian",
+      "rhinoLayer": "SS Pedestrian",
+      "name": "Pedestrian network (Space Syntax)",
+      "description": "Space Syntax pedestrian network, drawn by hand in QGIS (TASK_35) — her drawing is the source of truth, nothing simplified/straightened/thinned. Topology-noded, every end near car snapped exactly onto it (car gets the same vertex, never split unless SPLIT_CAR_AT_JUNCTIONS), clipped to Base border (city centre only). Presets from TASK_31-34 stay on disk, unused. Off by default.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_pedestrian_final.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#E5487F",
+        "strokeWidth": 1.6
+      },
+      "popupFields": [
+        "ssId",
+        "network",
+        "length",
+        "srcClass"
+      ],
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0 (derived network) + ODbL, © OpenStreetMap contributors",
+      "sourceDoc": "DATA_LOG.md#task-34",
+      "viewports": [
+        "computational"
+      ]
+    },
+    {
+      "id": "weimar_ss_car_city2",
+      "rhinoLayer": "SS Car (city 2)",
+      "name": "Car network",
+      "description": "Trial layer: teacher's Rhino model (181018_Weimar LOD1 and Street network_EPSG25832.3dm, layer 'car'), geometry unchanged, translated to EPSG:25832 (tools/import_teacher_ss_model.py). Off by default.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_car_city2.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0F5FB5",
+        "strokeWidth": 1.6
+      },
+      "popupFields": [
+        "ssId",
+        "network",
+        "source",
+        "length"
+      ],
+      "attribution": "Teacher's Space Syntax model (Rhino)",
+      "sourceDoc": "DATA_LOG.md#ss-city-wide-2",
+      "viewports": [
+        "computational",
+        "space_syntax"
+      ]
+    },
+    {
+      "id": "weimar_ss_pedestrian_city2",
+      "rhinoLayer": "SS Pedestrian (city 2)",
+      "name": "Pedestrian network",
+      "description": "Trial layer: teacher's Rhino model (layer 'pedestrian'), geometry unchanged, translated to EPSG:25832 (tools/import_teacher_ss_model.py). Off by default.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_pedestrian_city2.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#E5487F",
+        "strokeWidth": 1.6
+      },
+      "popupFields": [
+        "ssId",
+        "network",
+        "source",
+        "length"
+      ],
+      "attribution": "Teacher's Space Syntax model (Rhino)",
+      "sourceDoc": "DATA_LOG.md#ss-city-wide-2",
+      "viewports": [
+        "computational",
+        "space_syntax"
+      ]
+    },
+    {
+      "id": "weimar_ss_car_city",
+      "rhinoLayer": "SS Car (city)",
+      "name": "Car network city-wide (Space Syntax)",
+      "description": "Space Syntax car network for the whole city: inside the Base border her hand-drawn network (TASK_35, unchanged, source=manual), outside generated with the TASK_32/34 rules, preset strong (tools/build_space_syntax_city.py, source=auto), joined exactly at her edge ends. Off by default.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_car_city.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0F5FB5",
+        "strokeWidth": 1.6
+      },
+      "popupFields": [
+        "ssId",
+        "network",
+        "source",
+        "length",
+        "srcClass"
+      ],
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0 (derived network)",
+      "sourceDoc": "DATA_LOG.md#space-syntax-city-wide",
+      "viewports": [
+        "computational"
+      ]
+    },
+    {
+      "id": "weimar_ss_pedestrian_city",
+      "rhinoLayer": "SS Pedestrian (city)",
+      "name": "Pedestrian network city-wide (Space Syntax)",
+      "description": "Space Syntax pedestrian network for the whole city: inside the Base border her hand-drawn network (TASK_35, unchanged, source=manual), outside generated with the TASK_32/34 rules, preset strong (tools/build_space_syntax_city.py, source=auto), joined exactly at her edge ends. Off by default.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_pedestrian_city.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#E5487F",
+        "strokeWidth": 1.6
+      },
+      "popupFields": [
+        "ssId",
+        "network",
+        "source",
+        "length",
+        "srcClass"
+      ],
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0 (derived network) + ODbL, © OpenStreetMap contributors",
+      "sourceDoc": "DATA_LOG.md#space-syntax-city-wide",
+      "viewports": [
+        "computational"
+      ]
+    },
+    {
+      "id": "weimar_ss_car_removed",
+      "name": "Removed: car (Space Syntax review)",
+      "description": "Segments removed from the strong car Space Syntax network by the TASK_32 rules (field rule: 1_spur, 1_unnamed_spur, 1_border_stub, 1_disconnected, 2_loop, 2_stem, 2_parallel). For review only.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_car_strong_removed.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#EE5A14",
+        "strokeWidth": 2
+      },
+      "popupFields": [
+        "ssId",
+        "rule",
+        "network",
+        "length"
+      ],
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0 (derived network)",
+      "sourceDoc": "DATA_LOG.md#task-32",
+      "viewports": [
+        "computational"
+      ]
+    },
+    {
+      "id": "weimar_ss_pedestrian_removed",
+      "name": "Removed: pedestrian (Space Syntax review)",
+      "description": "Segments removed from the medium pedestrian Space Syntax network by the graph-cleaning rules (field rule: 1_spur, 1_unnamed_spur, 1_border_stub, 1_disconnected, 2_loop, 2_stem, 2_parallel — TASK_34 rebuilds pedestrian against a fixed car reference, same rule set as TASK_32). For review only.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_ss_pedestrian_medium_removed.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#EE5A14",
+        "strokeWidth": 2
+      },
+      "popupFields": [
+        "ssId",
+        "rule",
+        "network",
+        "length"
+      ],
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0 (derived network) + ODbL, © OpenStreetMap contributors",
+      "sourceDoc": "DATA_LOG.md#task-34",
+      "viewports": [
+        "computational"
+      ]
+    },
+    {
+      "id": "dop_rgb_20cm",
+      "name": "DOP — Colour 20 cm",
+      "description": "Digital orthophoto, true-colour RGB, 20 cm ground resolution. The primary aerial base image — renders at all working zoom levels. Opaque raster (WMS, JPEG).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dop_cir_20cm",
+      "name": "DOP — Colour-infrared 20 cm",
+      "description": "Digital orthophoto, colour-infrared (CIR: near-IR / red / green), 20 cm resolution. Vegetation shows red. Renders at all working zoom levels. Opaque raster (WMS, JPEG).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop20cir",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dop_pan_20cm",
+      "name": "DOP — Grayscale 20 cm",
+      "description": "Digital orthophoto, panchromatic (grayscale), 20 cm resolution. Renders at all working zoom levels. Opaque raster (WMS, JPEG).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop20pan",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dop_rgb_2m",
+      "name": "DOP — Colour 2 m (overview)",
+      "description": "Digital orthophoto, true-colour RGB, 2 m resolution. Lightweight city/region overview. Only renders when zoomed OUT past ~1:25 000 — it switches off at street level (use the 20 cm layer there). Opaque raster (WMS, JPEG).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop200rgb",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dop_cir_2m",
+      "name": "DOP — Colour-infrared 2 m (overview)",
+      "description": "Digital orthophoto, colour-infrared, 2 m resolution. Region overview; only renders when zoomed OUT past ~1:25 000. Opaque raster (WMS, JPEG).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop200cir",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dop_pan_2m",
+      "name": "DOP — Grayscale 2 m (overview)",
+      "description": "Digital orthophoto, panchromatic (grayscale), 2 m resolution. Region overview; only renders when zoomed OUT past ~1:25 000. Opaque raster (WMS, JPEG).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop200pan",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dop_info",
+      "name": "DOP — Image metadata",
+      "description": "Footprints of the individual orthophoto tiles with acquisition metadata (flight date, sensor, resolution). Semi-transparent overlay, queryable via click. Renders below ~1:750 000.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DOP",
+      "wmsLayers": "th_dop_info",
+      "wmsFormat": "image/png",
+      "wmsTransparent": true,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#12-orthophotos-dop",
+      "viewports": []
+    },
+    {
+      "id": "dgm2_hillshade",
+      "name": "Terrain relief (hillshade)",
+      "description": "Shaded relief (Schummerung) computed from the 2 m digital terrain model. Grayscale raster picture of the ground surface — high detail (river terraces, embankments, quarries visible). NOT elevation values and NOT 3D terrain geometry: it stays flat, the 3D view is not displaced. Opaque raster (WMS, JPEG). Renders at all zoom levels.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DGM",
+      "wmsLayers": "DGM2",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 0.5,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#13-digital-terrain-model-dgm",
+      "viewports": [
+        "blue_green"
+      ],
+      "style": {
+        "fill": "#B5AFA3",
+        "stroke": "#B5AFA3"
+      }
+    },
+    {
+      "id": "dgm5_hillshade",
+      "name": "DGM5 — Hillshade",
+      "description": "Shaded relief (Schummerung) computed from the 5 m digital terrain model. Same as DGM2 but coarser and lighter — better for a regional overview. NOT elevation values, NOT 3D terrain geometry. Opaque raster (WMS, JPEG). Renders at all zoom levels.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/DGM",
+      "wmsLayers": "DGM5",
+      "wmsFormat": "image/jpeg",
+      "wmsTransparent": false,
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#13-digital-terrain-model-dgm",
+      "viewports": []
+    },
+    {
+      "id": "wega_buildings_lod2",
+      "name": "3D Buildings LoD2 (coloured)",
+      "description": "LoD2 building models for all of Thuringia — footprint-accurate blocks with standardised roof shapes, roofs coloured by type. Cesium 3D Tiles (b3dm). NOT SHOWN on the web platform: the only engine that rendered these tiles' legacy KHR_techniques_webgl materials was CesiumJS, removed in TASK_15 (the WEGA real-roof path was judged not worth its cost). Real roof geometry for Grasshopper lives in data/processed/wega_buildings_obj/ (TASK_12). No viewport — kept as a manifest record of the WEGA endpoint.",
+      "resourceId": "wega3d",
+      "type": "3dtiles",
+      "url": "{proxy}/wega-3d-data/buildings/tileset.json",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th / virtualcitySYSTEMS, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": []
+    },
+    {
+      "id": "wega_buildings_flat",
+      "name": "3D Buildings LoD2 (single colour)",
+      "description": "Same LoD2 building models, one neutral colour — cleaner backdrop for overlaying other data. Cesium 3D Tiles. Requires the local CORS proxy.",
+      "resourceId": "wega3d",
+      "type": "3dtiles",
+      "url": "{proxy}/wega-3d-data/buildings2/tileset.json",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th / virtualcitySYSTEMS, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml"
+    },
+    {
+      "id": "wega_bauwerke",
+      "name": "3D Structures (Bauwerke)",
+      "description": "Engineering structures modelled separately from buildings: bridges, tunnels, retaining walls, large technical constructions. Cesium 3D Tiles. NOT SHOWN on the web platform — same reason as \"3D Buildings LoD2\": the CesiumJS viewport was removed in TASK_15. No viewport; kept as a manifest record of the WEGA endpoint.",
+      "resourceId": "wega3d",
+      "type": "3dtiles",
+      "url": "{proxy}/wega-3d-data/bauwerke/tileset.json",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th / virtualcitySYSTEMS, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": []
+    },
+    {
+      "id": "weimar_bplan",
+      "name": "Bebauungspläne & Satzungen",
+      "description": "Perimeters (Geltungsbereiche) of Weimar's legally binding development plans and bylaws — 65 plans. Each polygon carries the plan name, type, legal status, authority and a direct link to the plan PDF (click a feature). Converted once from the city's open-data Shapefile by tools/fetch_weimar_bplan.py; static GeoJSON, no runtime service. Perimeters only — not the internal zoning drawing.",
+      "resourceId": "stadt_weimar",
+      "type": "geojson",
+      "url": "layers/data/weimar_bplan.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#ff7a1a",
+        "fill": "rgba(255, 122, 26, 0.14)",
+        "strokeWidth": 2,
+        "outline": true,
+        "clampToGround": false
+      },
+      "attribution": "© GDI-Th / Stadt Weimar, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#21-bauleitplanung"
+    },
+    {
+      "id": "weimar_schools",
+      "name": "Schools",
+      "description": "29 school locations in Weimar (Grundschule, Regelschule, Gymnasium, Gemeinschaftsschule, Förderschule…). Points with full attributes: name, type, address, phone/e-mail, website, operator (Träger), school authority. From the city open-data Shapefile ko_we_schul via tools/fetch_weimar_shp.py — static GeoJSON. Click a marker for details.",
+      "resourceId": "stadt_weimar",
+      "type": "geojson",
+      "url": "layers/data/weimar_schools.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "markerColor": "#3fa7ff",
+        "markerSymbol": "school"
+      },
+      "attribution": "© GDI-Th / Stadt Weimar, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#22-infrastructure--social-facilities"
+    },
+    {
+      "id": "weimar_kitas",
+      "name": "Child care (Kitas)",
+      "description": "40 child-care / kindergarten locations in Weimar. Points with name, address, operator (Träger), contact. From the city open-data Shapefile ko_we_kita via tools/fetch_weimar_shp.py — static GeoJSON. Click a marker for details.",
+      "resourceId": "stadt_weimar",
+      "type": "geojson",
+      "url": "layers/data/weimar_kitas.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "markerColor": "#ffb43f",
+        "markerSymbol": "playground"
+      },
+      "attribution": "© GDI-Th / Stadt Weimar, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#22-infrastructure--social-facilities"
+    },
+    {
+      "id": "th_wsg_hqsg",
+      "name": "Water & spring protection zones",
+      "description": "Drinking-water and mineral-spring protection areas (Wasser- und Heilquellenschutzgebiete) with their inner/outer zones. Groundwater protection — Weimar has a supply-well protection area in the north (Ettersberg). Statewide WMS, crop to AOI later.",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "wsg_hqsg",
+      "visible": false,
+      "opacity": 0.5,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "style": {
+        "fill": "#3E8FD6",
+        "stroke": "#3E8FD6"
+      }
+    },
+    {
+      "id": "th_huek_aquifer",
+      "name": "Hydrogeology — upper aquifer",
+      "description": "Hydrogeological Map of Thuringia 1:200 000 (HÜK200) — uppermost groundwater conductor (Aquifer): rock type, permeability class. Statewide WMS.",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/hydrogeologie",
+      "wmsLayers": "huek200_hgwl_aquifer",
+      "visible": false,
+      "opacity": 0.5,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "style": {
+        "fill": "#0F5FB5",
+        "stroke": "#0F5FB5"
+      }
+    },
+    {
+      "id": "th_huek_aquitard",
+      "name": "Hydrogeology — upper aquitard",
+      "description": "HÜK200 — uppermost low-permeability layer (Aquitard / Grundwasserhemmer). Statewide WMS.",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/hydrogeologie",
+      "wmsLayers": "huek200_hgwl_aquitard",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "style": {
+        "fill": "#B5AFA3",
+        "stroke": "#B5AFA3"
+      }
+    },
+    {
+      "id": "th_huek_kgwl",
+      "name": "Hydrogeology — Cenozoic aquifer",
+      "description": "HÜK200 — Cenozoic (Känozoische) groundwater conductor: the young unconsolidated aquifers (valley fills, terraces) — relevant along the Ilm valley through Weimar. Statewide WMS.",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/hydrogeologie",
+      "wmsLayers": "huek200_kgwl",
+      "visible": false,
+      "opacity": 0.5,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "style": {
+        "fill": "#7BC29A",
+        "stroke": "#7BC29A"
+      }
+    },
+    {
+      "id": "th_geologie_guek200",
+      "name": "Geological map 1:200 000",
+      "description": "Geological Overview Map of Thuringia 1:200 000 (GÜK200) — surface bedrock units. Statewide WMS, renders over Weimar. (A 1:25 000 map exists as layer gk25 but has gaps around Weimar.)",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/geologie",
+      "wmsLayers": "guek200",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": []
+    },
+    {
+      "id": "th_nsg",
+      "name": "Nature reserves (NSG)",
+      "description": "Naturschutzgebiete — the strictest protected-area class. Statewide WMS, crop to AOI later.",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "nsg",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": []
+    },
+    {
+      "id": "th_lsg",
+      "name": "Landscape protection areas (LSG)",
+      "description": "Landschaftsschutzgebiete — large-area landscape protection. Statewide WMS.",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "lsg",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": []
+    },
+    {
+      "id": "th_spa",
+      "name": "Natura 2000 — bird sanctuaries (SPA)",
+      "description": "EU-Vogelschutzgebiete (Special Protection Areas). Statewide WMS; an SPA reaches the Weimar area. FFH sites are a separate layer (not wired yet).",
+      "resourceId": "umweltportal_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "spa",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th (TLUBN), Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": []
+    },
+    {
+      "id": "weimar_transit_stops",
+      "name": "Bus & tram stops (VMT)",
+      "description": "347 bus/tram/rail stops inside the Weimar AOI, from the VMT (Verkehrsverbund Mittelthüringen) GTFS feed. Points with stop name, DHID/IFOPT id, platform, wheelchair-boarding flag. Static GeoJSON via tools/fetch_gtfs_stops.py — re-run to refresh (feed 2026-08-28). Routes/timetables are in the full GTFS, not this layer.",
+      "resourceId": "mobilitaet_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_transit_stops.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "markerColor": "#FFD500"
+      },
+      "attribution": "© VMT GmbH, CC BY 4.0",
+      "sourceDoc": "DATA.md#51-gtfs-vmt",
+      "viewports": [
+        "combined"
+      ],
+      "legendKind": "dot"
+    },
+    {
+      "id": "th_road_network",
+      "name": "Road network (ATKIS)",
+      "description": "Road segments (Straßensegment) from the ATKIS Basis-DLM, INSPIRE Transport Networks. Full street network incl. minor roads. Statewide WMS.",
+      "resourceId": "mobilitaet_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/INSPIREtn",
+      "wmsLayers": "TN.RoadTransportNetwork.RoadLink",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#52-street-network-osm",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "th_rail_network",
+      "name": "Railway network (ATKIS)",
+      "description": "Railway links (Eisenbahnverbindung) from the ATKIS Basis-DLM, INSPIRE Transport Networks. Statewide WMS.",
+      "resourceId": "mobilitaet_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/INSPIREtn",
+      "wmsLayers": "TN.RailTransportNetwork.RailwayLink",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-5",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "th_rail_stations",
+      "name": "Railway station areas (ATKIS)",
+      "description": "Station grounds (Bahnhofsgelände) polygons from the ATKIS Basis-DLM, INSPIRE Transport Networks. Statewide WMS.",
+      "resourceId": "mobilitaet_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/INSPIREtn",
+      "wmsLayers": "TN.RailTransportNetwork.RailwayStationArea",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-5",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "th_classified_roads",
+      "name": "Classified road network",
+      "description": "Klassifiziertes Straßennetz (Straßeninformationsbank): Autobahn / Bundes- / Landes- / Kreis- / Gemeindestraße with network nodes and kilometre reference. Statewide WMS.",
+      "resourceId": "mobilitaet_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/STRNETZ",
+      "wmsLayers": "Klassifiz_StrNetz",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-5",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "weimar_roads",
+      "name": "Road network (ATKIS, vector)",
+      "description": "8912 road-centreline segments intersecting the Weimar AOI — the real street network (residential streets included, e.g. \"Belvederer Allee\", \"Bahnhofstraße\", \"Karl-Marx-Straße\"), not just the classified skeleton. Fetched from the INSPIRE ATOM feed \"TH Verkehrsnetze ATKIS Basis-DLM\" (tn-ro:RoadLink, joined to tn-ro:Road for name/classification where grouped) by tools/fetch_weimar_roads_atkis.py — supersedes the first attempt (tools/fetch_weimar_roads.py, STRNETZ_wfs, only 51 classified segments; see DATA_LOG.md for the correction). Attributes: roadLinkId, fictitious, name, nationalRoadCode (A/B/L/K class, ~740 segments), localRoadCode — 4337 segments carry a joined name.",
+      "resourceId": "geoproxy_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_roads.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#EE5A14",
+        "strokeWidth": 1.5
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-5",
+      "viewports": [
+        "combined"
+      ],
+      "visibleViewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "th_traffic_volumes",
+      "name": "Traffic volumes (census 2015)",
+      "description": "Straßenverkehrszählung 2015 — average daily traffic volumes (DTV) on the classified road network, by count-section. Statewide WMS (also a WFS: STRNETZ_SVZ_wfs). Latest open SVZ for Thuringia.",
+      "resourceId": "mobilitaet_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services/STRNETZ_SVZ",
+      "wmsLayers": "SVZ2015_VMenge",
+      "visible": false,
+      "opacity": 1,
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-5",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "weimar_pedestrian_osm",
+      "name": "Pedestrian & cycle network (OSM)",
+      "description": "7924 OpenStreetMap features for the Weimar AOI: 7667 ways tagged highway=footway/path/pedestrian/steps/cycleway/track (or foot=yes/designated on another road class — sidewalks and shared paths mapped that way) plus 257 highway=crossing points. Separate resource from every official layer in this project — licence ODbL, attribution © OpenStreetMap contributors, not merged with any dl-de/by-2-0 derivative. Fetched via Overpass by tools/fetch_weimar_pedestrian_osm.py. Attributes: highway, name, surface, foot, bicycle, wheelchair, lit, ref, sidewalk, crossing.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/weimar_pedestrian_osm.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#2ecc71",
+        "strokeWidth": 2,
+        "markerColor": "#2ecc71",
+        "markerSize": "small"
+      },
+      "attribution": "© OpenStreetMap contributors, ODbL",
+      "sourceDoc": "DATA.md#tier-5",
+      "viewports": []
+    },
+    {
+      "id": "atkis_verkehr_strassenachse",
+      "name": "ATKIS Verkehr — Straßenachsen (street axes)",
+      "description": "3414 street centre-line axes intersecting the Weimar admin boundary — this is the transport network. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Strassenachse, Objektart 42003), manually downloaded via the geoportal.thueringen.de OpenData Download Client — not the INSPIRE 'Verkehrsnetze' harmonisation used by 'Road network (ATKIS, vector)'. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review before deciding what to keep / merge / drop (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_strassenachse.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0D0D0D",
+        "strokeWidth": 1.6
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_wegpfadsteig",
+      "name": "ATKIS Verkehr — Wege/Pfade/Steige (paths, tracks, steps)",
+      "description": "1139 footpaths / trails / steps intersecting the Weimar admin boundary — a separate pedestrian-network class, distinct from the street axes. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_WegPfadSteig, Objektart 53003), manually downloaded via the geoportal.thueringen.de OpenData Download Client — not the INSPIRE 'Verkehrsnetze' harmonisation used by 'Road network (ATKIS, vector)'. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review before deciding what to keep / merge / drop (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_wegpfadsteig.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#E5487F",
+        "strokeWidth": 1.8
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "combined"
+      ],
+      "subName": "Paths & trails",
+      "visibleViewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_fahrwegachse",
+      "name": "ATKIS Verkehr — Fahrwegachsen (field / forest tracks)",
+      "description": "1594 unpaved field / forest driveway axes intersecting the Weimar admin boundary — semantically closer to the transport side, but check a few examples visually before assigning. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Fahrwegachse, Objektart 42008), manually downloaded via the geoportal.thueringen.de OpenData Download Client — not the INSPIRE 'Verkehrsnetze' harmonisation used by 'Road network (ATKIS, vector)'. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review before deciding what to keep / merge / drop (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_fahrwegachse.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#F7A81B",
+        "strokeWidth": 1.6
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "combined"
+      ],
+      "subName": "Tracks & carriageways",
+      "visibleViewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_fahrbahnachse",
+      "name": "ATKIS Verkehr — Fahrbahnachsen (carriageway axes)",
+      "description": "34 individual carriageway axes intersecting the Weimar admin boundary — the per-carriageway centre-lines for divided / multi-lane roads. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Fahrbahnachse, Objektart 42005), manually downloaded via the geoportal.thueringen.de OpenData Download Client — not the INSPIRE 'Verkehrsnetze' harmonisation used by 'Road network (ATKIS, vector)'. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review before deciding what to keep / merge / drop (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_fahrbahnachse.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#f08c00",
+        "strokeWidth": 1.5
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_strassenverkehr",
+      "name": "ATKIS Verkehr — Straßenverkehr (road surface, polygons)",
+      "description": "168 road-surface / carriageway-area polygons (not lines) intersecting the Weimar admin boundary. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Strassenverkehr, Objektart 42001), manually downloaded via the geoportal.thueringen.de OpenData Download Client — not the INSPIRE 'Verkehrsnetze' harmonisation used by 'Road network (ATKIS, vector)'. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review before deciding what to keep / merge / drop (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_strassenverkehr.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#ff8787",
+        "fill": "rgba(255, 135, 135, 0.25)",
+        "strokeWidth": 1,
+        "outline": true
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_platz",
+      "name": "ATKIS Verkehr — Plätze (squares, polygons)",
+      "description": "65 square / plaza surface polygons intersecting the Weimar admin boundary — usually pedestrian, could serve as an extra pedestrian layer. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Platz, Objektart 42009), manually downloaded via the geoportal.thueringen.de OpenData Download Client — not the INSPIRE 'Verkehrsnetze' harmonisation used by 'Road network (ATKIS, vector)'. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review before deciding what to keep / merge / drop (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_platz.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#FFD500",
+        "strokeWidth": 0.8,
+        "outline": true,
+        "fillOpacity": 0.5
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_bahnstrecke",
+      "name": "ATKIS Verkehr — Bahnstrecken (railway lines)",
+      "description": "33 railway line geometries intersecting the Weimar admin boundary — not part of the road / pedestrian classification, kept separate for the user to decide whether it is needed at all. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Bahnstrecke, Objektart 42014), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_bahnstrecke.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#7048e8",
+        "strokeWidth": 1.5
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_bahnverkehr",
+      "name": "ATKIS Verkehr — Bahnverkehr (railway surface, polygons)",
+      "description": "30 railway-surface polygons intersecting the Weimar admin boundary — not part of the road / pedestrian classification. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Bahnverkehr, Objektart 42010), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_bahnverkehr.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#9775fa",
+        "fill": "rgba(151, 117, 250, 0.22)",
+        "strokeWidth": 1,
+        "outline": true
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_bahnverkehrsanlage",
+      "name": "ATKIS Verkehr — Bahnverkehrsanlagen (railway facilities)",
+      "description": "9 railway-facility features (points + polygons) intersecting the Weimar admin boundary — not part of the road / pedestrian classification. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Bahnverkehrsanlage, Objektart 53004), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_bahnverkehrsanlage.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#7048e8",
+        "fill": "rgba(112, 72, 232, 0.22)",
+        "strokeWidth": 1,
+        "outline": true,
+        "markerColor": "#7048e8"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_strassenverkehrsanlage",
+      "name": "ATKIS Verkehr — Straßenverkehrsanlagen (road facilities)",
+      "description": "13 road-facility points intersecting the Weimar admin boundary. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Strassenverkehrsanlage, Objektart 53002), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_strassenverkehrsanlage.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#e8590c",
+        "markerColor": "#e8590c"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_bauwerkimverkehrsbereich",
+      "name": "ATKIS Verkehr — Bauwerke im Verkehrsbereich (transport structures)",
+      "description": "76 structures within the transport area (bridges, tunnels, culverts and similar; lines + points + polygons) intersecting the Weimar admin boundary — kept separate, not part of the road / pedestrian classification. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_BauwerkImVerkehrsbereich, Objektart 53001), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_bauwerkimverkehrsbereich.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#495057",
+        "fill": "rgba(73, 80, 87, 0.2)",
+        "strokeWidth": 1,
+        "outline": true,
+        "markerColor": "#495057"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_bauwerkimgewaesserbereich",
+      "name": "ATKIS Verkehr — Bauwerke im Gewässerbereich (water-area structures)",
+      "description": "285 structures in the water area (weirs, retention basins, bank works; lines + points + polygons) intersecting the Weimar admin boundary — bundled into the Verkehr theme at source, not road / pedestrian data. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_BauwerkImGewaesserbereich, Objektart 53009), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_bauwerkimgewaesserbereich.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#1c7ed6",
+        "fill": "rgba(28, 126, 214, 0.2)",
+        "strokeWidth": 1,
+        "outline": true,
+        "markerColor": "#1c7ed6"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_nullpunkt",
+      "name": "ATKIS Verkehr — Nullpunkte (route reference points)",
+      "description": "25 kilometre / route zero-point markers intersecting the Weimar admin boundary — reference data, not network geometry. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Nullpunkt, Objektart 56002), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py (TASK_13 + TASK_14 merged 7 more manual OpenData Download Client rectangles; dedup by eindeutigerObjektidentifikator; coverage grew from the ~7x7.8 km city centre to ~95% of the municipality). Off by default — one layer per object type, awaiting visual review (TASK_07).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_nullpunkt.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#868e96",
+        "markerColor": "#868e96"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-07--native-atkis-verkehr",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_flugverkehrsanlage",
+      "name": "ATKIS Verkehr — Flugverkehrsanlagen (air-traffic facilities)",
+      "description": "2 air-traffic-facility features intersecting the Weimar admin boundary — the helipad (Hubschrauberlandeplatz, Art 5530) at the Sophien- und Hufeland-Klinikum, plus a paved airfield-surface polygon (Art 1310) at the Flugplatz Weimar-Umpferstedt (added by TASK_14). New object type that only appears in the wider TASK_13 / TASK_14 download rectangles. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Flugverkehrsanlage, Objektart 53007), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py. Off by default — one layer per object type, awaiting visual review (TASK_07 / TASK_13 / TASK_14).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_flugverkehrsanlage.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0c8599",
+        "markerColor": "#0c8599"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-13",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "atkis_verkehr_flugverkehr",
+      "name": "ATKIS Verkehr — Flugverkehr (airfield surface, polygon)",
+      "description": "1 air-traffic surface polygon intersecting the Weimar admin boundary — the Flugplatz Weimar-Umpferstedt (Art 5522, Nutzung 1000, a glider / sport airfield SE of the city). New object type first seen in the TASK_14 download rectangles. Native ATKIS Basis-DLM object catalogue (ObjektartText=AX_Flugverkehr, Objektart 42015), manually downloaded via the geoportal.thueringen.de OpenData Download Client. EPSG:25832→4326, clipped to the Weimar admin boundary, cleaned via tools/geojson_clean.py by tools/merge_weimar_atkis_verkehr.py. Off by default — one layer per object type, awaiting visual review (TASK_07 / TASK_14).",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_flugverkehr.geojson",
+      "visible": false,
+      "opacity": 1,
+      "style": {
+        "stroke": "#0c8599",
+        "fill": "rgba(12, 133, 153, 0.2)",
+        "strokeWidth": 1,
+        "outline": true
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA_LOG.md#task-14",
+      "viewports": [
+        "transport"
+      ]
+    },
+    {
+      "id": "weimar_detailed_buildings",
+      "name": "Detailed Buildings",
+      "description": "WEGA LoD2 buildings with real roofs (re-extracted in TASK 41 from the b3dm tiles — the TASK 12 OBJ files were skewed). White shaded meshes with black edges; z = metres above each building's lowest point.",
+      "resourceId": "wega3d",
+      "type": "wega_mesh",
+      "url": "layers/data/weimar_detailed_buildings",
+      "visible": true,
+      "opacity": 1,
+      "attribution": "© GDI-Th, WEGA 3D-Gebäudemodelle LoD2, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#14-3d-building-models-lod1--lod2-citygml",
+      "viewports": [
+        "weimar_model"
+      ]
+    },
+    {
+      "id": "osm_bike_parking",
+      "name": "Bicycle parking",
+      "description": "Bicycle parking (OSM amenity=bicycle_parking), points (areas as centroids).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_bike_parking.geojson",
+      "style": {
+        "markerColor": "#0F5FB5"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_parking_points",
+      "name": "Car parking — points",
+      "description": "Car parks mapped as single points in OSM.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_parking_points.geojson",
+      "style": {
+        "markerColor": "#0D0D0D"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined"
+      ],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_parking_areas",
+      "name": "Car parking — areas",
+      "description": "Surface car parks mapped as areas in OSM.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_parking_areas.geojson",
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#E9E4D8",
+        "fillOpacity": 0.95,
+        "strokeWidth": 0.6
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined"
+      ],
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_parking_buildings",
+      "name": "Car parking — buildings",
+      "description": "Multi-storey / underground car parks and parking buildings (OSM).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_parking_buildings.geojson",
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#3A3A3A",
+        "fillOpacity": 0.95,
+        "strokeWidth": 1
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined"
+      ],
+      "visible": false,
+      "opacity": 1,
+      "visibleViewports": [
+        "combined"
+      ]
+    },
+    {
+      "id": "osm_cycleways",
+      "name": "Bike paths",
+      "description": "Separate cycle paths (OSM highway=cycleway).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_cycleways.geojson",
+      "style": {
+        "stroke": "#0F5FB5",
+        "strokeWidth": 2.6
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [],
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_bike_lanes",
+      "name": "Bike lanes & routes on roads",
+      "description": "Cycle lanes / tracks on roads, bicycle roads, paths designated for bikes (OSM). Attribute infra = type.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_bike_lanes.geojson",
+      "style": {
+        "stroke": "#3E8FD6",
+        "strokeWidth": 2
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [],
+      "visible": false,
+      "opacity": 1,
+      "subName": "Lanes & tracks on roads"
+    },
+    {
+      "id": "osm_bike_services",
+      "name": "Bike services",
+      "description": "Bicycle rental, repair stations, bike shops (OSM).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_bike_services.geojson",
+      "style": {
+        "markerColor": "#F7B6D2"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1,
+      "subName": "Bike services (rental, repair, shops)"
+    },
+    {
+      "id": "osm_charging",
+      "name": "EV charging stations",
+      "description": "Charging stations (OSM amenity=charging_station).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_charging.geojson",
+      "style": {
+        "markerColor": "#7BC29A"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined"
+      ],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_fuel",
+      "name": "Fuel stations",
+      "description": "Fuel stations (OSM amenity=fuel).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_fuel.geojson",
+      "style": {
+        "markerColor": "#EE5A14"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined"
+      ],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_rail_stations",
+      "name": "Railway stations",
+      "description": "Railway stations and halts (OSM): station areas and station points.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_rail_stations.geojson",
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#0D0D0D",
+        "fillOpacity": 0.55,
+        "strokeWidth": 1.5,
+        "markerColor": "#0D0D0D"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined"
+      ],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "atkis_bahnstrecke",
+      "name": "Railway lines (ATKIS)",
+      "description": "Railway lines (AX_Bahnstrecke) from ATKIS Verkehr, clipped to the city.",
+      "resourceId": "atkis_verkehr_th",
+      "type": "geojson",
+      "url": "layers/data/weimar_atkis_bahnstrecke.geojson",
+      "style": {
+        "stroke": "#0D0D0D",
+        "strokeWidth": 2.4
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-1",
+      "viewports": [
+        "combined"
+      ],
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_heritage",
+      "name": "Heritage objects (OSM)",
+      "description": "Monuments, memorials and objects tagged heritage in OSM (points and building outlines).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_heritage.geojson",
+      "style": {
+        "stroke": "#A8300C",
+        "fill": "#A8300C",
+        "fillOpacity": 0.5,
+        "strokeWidth": 1.2,
+        "markerColor": "#A8300C"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 1
+    },
+    {
+      "id": "osm_unesco_objects",
+      "name": "UNESCO — component objects",
+      "description": "Component sites of the UNESCO World Heritage 'Klassisches Weimar' / 'Bauhaus' (OSM, role = component object).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_unesco.geojson",
+      "style": {
+        "stroke": "#0D0D0D",
+        "fill": "#F7B6D2",
+        "fillOpacity": 0.75,
+        "strokeWidth": 1.2
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined",
+        "blue_green"
+      ],
+      "filterExpr": [
+        "==",
+        [
+          "get",
+          "unescoRole"
+        ],
+        "component object"
+      ],
+      "visible": false,
+      "opacity": 0.5
+    },
+    {
+      "id": "osm_unesco_property",
+      "name": "UNESCO — property areas",
+      "description": "The two World Heritage property polygons (OSM). Official buffer-zone polygons are not published in the sources available here.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_unesco.geojson",
+      "style": {
+        "stroke": "#EE5A14",
+        "fill": "#EE5A14",
+        "fillOpacity": 0.1,
+        "strokeWidth": 2.2
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "combined",
+        "blue_green"
+      ],
+      "filterExpr": [
+        "==",
+        [
+          "get",
+          "unescoRole"
+        ],
+        "World Heritage property"
+      ],
+      "visible": false,
+      "opacity": 0.5
+    },
+    {
+      "id": "th_denkmal_areas",
+      "name": "Monument areas (ALKIS)",
+      "description": "ALKIS: Denkmal (areas).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "sie03_f_5",
+      "opacity": 0.7,
+      "style": {
+        "fill": "#A8300C",
+        "stroke": "#A8300C"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false
+    },
+    {
+      "id": "th_denkmalschutz",
+      "name": "Heritage protection law (ALKIS)",
+      "description": "ALKIS: Denkmalschutzrecht — areas, lines and points.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "geb03_f_4,geb03_l_2,geb03_p_2",
+      "opacity": 0.8,
+      "style": {
+        "fill": "#E5487F",
+        "stroke": "#E5487F"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false
+    },
+    {
+      "id": "th_nsg_p",
+      "name": "Nature reserves (NSG)",
+      "description": "Naturschutzgebiete.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "nsg",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#EE5A14",
+        "stroke": "#EE5A14"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false
+    },
+    {
+      "id": "th_lsg_p",
+      "name": "Landscape protection areas (LSG)",
+      "description": "Landschaftsschutzgebiete.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "lsg",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#7BC29A",
+        "stroke": "#7BC29A"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false
+    },
+    {
+      "id": "th_ffh",
+      "name": "FFH areas (Natura 2000)",
+      "description": "FFH-Gebiete.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "ffh_geb",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#A8300C",
+        "stroke": "#A8300C"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false
+    },
+    {
+      "id": "th_spa_p",
+      "name": "Bird sanctuaries (SPA)",
+      "description": "EU-Vogelschutzgebiete.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "spa",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#3E8FD6",
+        "stroke": "#3E8FD6"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false
+    },
+    {
+      "id": "th_naturpark",
+      "name": "Nature parks",
+      "description": "Naturparke.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "naturpark",
+      "opacity": 0.6,
+      "style": {
+        "fill": "#7BC29A",
+        "stroke": "#7BC29A"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false
+    },
+    {
+      "id": "th_natmon",
+      "name": "Natural monuments",
+      "description": "Nationales Naturmonument and Naturdenkmal (ALKIS lines/points).",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "nnm,geb03_l_1,geb03_p_1",
+      "opacity": 0.75,
+      "style": {
+        "fill": "#0F5FB5",
+        "stroke": "#0F5FB5"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false
+    },
+    {
+      "id": "osm_landcover",
+      "name": "Land cover (OSM)",
+      "description": "Forest, parks & gardens, meadows, cemeteries, allotments, sport, orchards, farmland, scrub & wetland (OSM polygons, clipped to the city). Attribute landcover = category.",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_landcover.geojson",
+      "style": {
+        "stroke": "#F6F3EC",
+        "fill": "#CFE8B0",
+        "fillOpacity": 0.9,
+        "strokeWidth": 0.4
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "blue_green"
+      ],
+      "colorBy": {
+        "property": "landcover",
+        "palette": "landcoverCategories",
+        "legendTitle": "Land cover"
+      },
+      "visible": false,
+      "opacity": 0.5,
+      "visibleViewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "osm_water_areas",
+      "name": "Water bodies",
+      "description": "Lakes, ponds, river areas (OSM).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_water_areas.geojson",
+      "style": {
+        "stroke": "#0F5FB5",
+        "fill": "#0F5FB5",
+        "fillOpacity": 0.85,
+        "strokeWidth": 0.8
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false,
+      "opacity": 0.5,
+      "visibleViewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "osm_waterways",
+      "name": "Rivers & streams (Ilm, brooks)",
+      "description": "Rivers, streams, canals, ditches (OSM waterway=*), with names (Ilm, Lossa, …).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_waterways.geojson",
+      "style": {
+        "stroke": "#0F5FB5",
+        "strokeWidth": 2
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false,
+      "opacity": 0.5
+    },
+    {
+      "id": "osm_trees",
+      "name": "Trees",
+      "description": "Individual trees mapped in OSM (natural=tree).",
+      "resourceId": "openstreetmap",
+      "type": "geojson",
+      "url": "layers/data/osm_trees.geojson",
+      "style": {
+        "markerColor": "#2B7F5B"
+      },
+      "attribution": "© OpenStreetMap contributors (ODbL)",
+      "sourceDoc": "tools/fetch_weimar_osm_extras.py",
+      "viewports": [
+        "blue_green"
+      ],
+      "legendKind": "dot",
+      "visible": false,
+      "opacity": 0.5,
+      "markerIcon": "tree"
+    },
+    {
+      "id": "th_uesg",
+      "name": "Flood zones (statutory, ÜSG)",
+      "description": "Überschwemmungsgebiete (statutory flood zones). HQ100 / HQextrem hazard maps are not part of the services available here.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "uesg",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#0F5FB5",
+        "stroke": "#0F5FB5"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false
+    },
+    {
+      "id": "th_obk_f",
+      "name": "Biotopes — areas (OBK)",
+      "description": "Offenlandbiotopkartierung: areas.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "obk1_flaechen",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#A8300C",
+        "stroke": "#A8300C"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false,
+      "subName": "Areas"
+    },
+    {
+      "id": "th_obk_l",
+      "name": "Biotopes — lines (OBK)",
+      "description": "Offenlandbiotopkartierung: lines.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "obk1_linien",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#EE5A14",
+        "stroke": "#EE5A14"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false,
+      "subName": "Lines"
+    },
+    {
+      "id": "th_obk_p",
+      "name": "Biotopes — points (OBK)",
+      "description": "Offenlandbiotopkartierung: points.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "obk1_punkte",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#0D0D0D",
+        "stroke": "#0D0D0D"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [],
+      "visible": false,
+      "subName": "Points"
+    },
+    {
+      "id": "th_veg_agri",
+      "name": "Farmland (ATKIS)",
+      "description": "ATKIS Landwirtschaft (farmland areas). InVeKoS field blocks are not in the open services available here.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "veg01_f",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#EDE3A0",
+        "stroke": "#EDE3A0"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false
+    },
+    {
+      "id": "th_veg_forest",
+      "name": "Forest (ATKIS)",
+      "description": "ATKIS Wald.",
+      "resourceId": "geoproxy_th",
+      "type": "wms",
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "wmsLayers": "veg02_f",
+      "opacity": 0.5,
+      "style": {
+        "fill": "#2B7F5B",
+        "stroke": "#2B7F5B"
+      },
+      "attribution": "© GDI-Th, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ],
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_inland_waters",
+      "name": "Biotopes — Inland waters",
+      "subName": "Inland waters",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Binnengewässer'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 0,
+      "classRgb": [
+        0,
+        51,
+        255
+      ],
+      "classColor": "#0F5FB5",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#0F5FB5",
+        "stroke": "#0F5FB5"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_moors",
+      "name": "Biotopes — Bogs & moors",
+      "subName": "Bogs & moors",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Moore'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 1,
+      "classRgb": [
+        153,
+        153,
+        0
+      ],
+      "classColor": "#8CC5C2",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#8CC5C2",
+        "stroke": "#8CC5C2"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_farmland_grassland",
+      "name": "Biotopes — Farmland & grassland",
+      "subName": "Farmland & grassland",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Landwirtschaft / Grünland'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 2,
+      "classRgb": [
+        153,
+        102,
+        0
+      ],
+      "classColor": "#F7A81B",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#F7A81B",
+        "stroke": "#F7A81B"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_extreme_sites",
+      "name": "Biotopes — Extreme sites (rock, dry)",
+      "subName": "Extreme sites (rock, dry)",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Extremstandorte'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 3,
+      "classRgb": [
+        192,
+        173,
+        170
+      ],
+      "classColor": "#9A9A94",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#9A9A94",
+        "stroke": "#9A9A94"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_trees_hedges",
+      "name": "Biotopes — Trees & hedgerows",
+      "subName": "Trees & hedgerows",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Bäume, Feldgehölze'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 4,
+      "classRgb": [
+        51,
+        255,
+        51
+      ],
+      "classColor": "#7BC29A",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#7BC29A",
+        "stroke": "#7BC29A"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_forests",
+      "name": "Biotopes — Forests",
+      "subName": "Forests",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Wälder'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 5,
+      "classRgb": [
+        0,
+        102,
+        0
+      ],
+      "classColor": "#2B7F5B",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#2B7F5B",
+        "stroke": "#2B7F5B"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_disturbed_sites",
+      "name": "Biotopes — Disturbed sites",
+      "subName": "Disturbed sites",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Anthropogen gestörte Standorte'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 6,
+      "classRgb": [
+        255,
+        204,
+        204
+      ],
+      "classColor": "#F7B6D2",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#F7B6D2",
+        "stroke": "#F7B6D2"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "th_obk_c_settlement_recreation",
+      "name": "Biotopes — Settlement, traffic, recreation",
+      "subName": "Settlement, traffic, recreation",
+      "description": "Offenlandbiotopkartierung (OBK): class 'Siedlung, Verkehr, Erholung'. The WMS (obk1_flaechen + obk1_linien + obk1_punkte) is split by legend colour in the browser and re-coloured in the project palette; areas, lines and points of the class are drawn together.",
+      "resourceId": "geoproxy_th",
+      "type": "wms_class",
+      "classIdx": 7,
+      "classRgb": [
+        153,
+        0,
+        51
+      ],
+      "classColor": "#EE5A14",
+      "wmsLayers": [
+        "obk1_flaechen",
+        "obk1_linien",
+        "obk1_punkte"
+      ],
+      "url": "https://www.geoproxy.geoportal-th.de/geoproxy/services",
+      "visible": false,
+      "visibleViewports": [
+        "blue_green"
+      ],
+      "opacity": 0.5,
+      "style": {
+        "fill": "#EE5A14",
+        "stroke": "#EE5A14"
+      },
+      "attribution": "© GDI-Th / TLUBN, Datenlizenz Deutschland – Namensnennung 2.0",
+      "sourceDoc": "DATA.md#tier-3",
+      "viewports": [
+        "blue_green"
+      ]
+    },
+    {
+      "id": "weimar_counting_gates",
+      "name": "Counting gates",
+      "description": "120 pedestrian / cyclist counting gates (A1–U6) from the teacher's counting table, placed by its X/Y translated into EPSG:25832 (tools/build_counting_gates.py). Click a point for the counts.",
+      "resourceId": "teacher_ss",
+      "type": "geojson",
+      "url": "layers/data/weimar_counting_gates.geojson",
+      "visible": true,
+      "opacity": 1,
+      "attribution": "Counting gates: Bauhaus-Universität Weimar, InfAR (Weimar 03-2016)",
+      "sourceDoc": "DATA_LOG.md#counting-gates",
+      "viewports": [
+        "space_syntax"
+      ],
+      "style": {
+        "markerColor": "#c1121f",
+        "markerRadius": 2.33,
+        "markerStrokeWidth": 0.5
+      },
+      "popupFields": [
+        "gate",
+        "Min Pedestrian All",
+        "Max Pedestrian All",
+        "Average Pedestrian All",
+        "Average Weekdays  Pedestrian All"
+      ]
+    },
+    {
+      "id": "weimar_counting_gates_labels",
+      "name": "Counting gates — labels",
+      "description": "Gate names (A1 … U6) as text labels; switch on/off independently of the points.",
+      "resourceId": "teacher_ss",
+      "type": "geojson",
+      "url": "layers/data/weimar_counting_gates.geojson",
+      "visible": true,
+      "opacity": 1,
+      "attribution": "Counting gates: Bauhaus-Universität Weimar, InfAR (Weimar 03-2016)",
+      "sourceDoc": "DATA_LOG.md#counting-gates",
+      "viewports": [
+        "space_syntax"
+      ],
+      "style": {
+        "labelField": "gate",
+        "labelColor": "#c1121f"
+      },
+      "interactive": false
+    }
+  ],
+  "parcelUseCategories": [
+    {
+      "name": "Residential",
+      "color": "#FFD500"
+    },
+    {
+      "name": "Mixed",
+      "color": "#F7A81B"
+    },
+    {
+      "name": "Industry & Commerce",
+      "color": "#EE5A14"
+    },
+    {
+      "name": "Special function",
+      "color": "#F7B6D2"
+    },
+    {
+      "name": "Sport & Recreation",
+      "color": "#7BC29A"
+    },
+    {
+      "name": "Agriculture",
+      "color": "#EDE3A0"
+    },
+    {
+      "name": "Forest",
+      "color": "#2B7F5B"
+    },
+    {
+      "name": "Trees & shrubs",
+      "color": "#A8D5B8"
+    },
+    {
+      "name": "Road & path",
+      "color": "#3A3A3A"
+    },
+    {
+      "name": "Rail & air",
+      "color": "#0A3D7A"
+    },
+    {
+      "name": "Water",
+      "color": "#0F5FB5"
+    },
+    {
+      "name": "Barren & mining",
+      "color": "#B5AFA3"
+    },
+    {
+      "name": "Cemetery",
+      "color": "#5B8DB8"
+    },
+    {
+      "name": "Other",
+      "color": "#E9E4D8"
+    }
+  ],
+  "landcoverCategories": [
+    {
+      "name": "Forest",
+      "color": "#2B7F5B"
+    },
+    {
+      "name": "Park & garden",
+      "color": "#7BC29A"
+    },
+    {
+      "name": "Meadow & grass",
+      "color": "#CFE8B0"
+    },
+    {
+      "name": "Cemetery",
+      "color": "#9A9A94"
+    },
+    {
+      "name": "Allotments",
+      "color": "#F7B6D2"
+    },
+    {
+      "name": "Sport",
+      "color": "#FFD500"
+    },
+    {
+      "name": "Orchard & vineyard",
+      "color": "#F7A81B"
+    },
+    {
+      "name": "Farmland",
+      "color": "#EDE3A0"
+    },
+    {
+      "name": "Scrub & wetland",
+      "color": "#8CC5C2"
+    }
+  ]
+}
